@@ -7,6 +7,7 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using BFYOC.Function.Data;
 
 namespace BFYOC.Function
 {
@@ -25,7 +26,7 @@ namespace BFYOC.Function
                 ? "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response."
                 : $"Hello, {ratingId}. This HTTP triggered function executed successfully.";
 
-            return new OkObjectResult(responseMessage);
+            return new OkObjectResult(new UserRating());
         }
     }
 }
