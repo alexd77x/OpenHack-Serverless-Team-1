@@ -22,9 +22,7 @@ namespace BFYOC.Function
 
             string ratingId = req.Query["ratingId"];
 
-            string responseMessage = string.IsNullOrEmpty(ratingId)
-                ? "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response."
-                : $"Hello, {ratingId}. This HTTP triggered function executed successfully.";
+            //TODO Call Ratings Manager to get the Rating
 
             return new OkObjectResult(new UserRating());
         }

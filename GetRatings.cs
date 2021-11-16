@@ -23,9 +23,9 @@ namespace BFYOC.Function
 
             string userId = req.Query["userId"];
 
-            string responseMessage = string.IsNullOrEmpty(userId)
-                ? "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response."
-                : $"Hello, {userId}. This HTTP triggered function executed successfully.";
+            //TODO Validate User Id
+
+            //TODO Call Rating Manager to Get Ratings for User
 
             return new OkObjectResult(new List<UserRating>());
         }
