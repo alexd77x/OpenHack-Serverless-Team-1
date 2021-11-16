@@ -9,11 +9,14 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using BFYOC.Function.Data;
+using BFYOC.Function.Managers;
 
 namespace BFYOC.Function
 {
     public static class GetRatings
     {
+        private static RatingManager ratingManager = new RatingManager();
+
         [FunctionName("GetRatings")]
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequest req,
@@ -25,9 +28,11 @@ namespace BFYOC.Function
 
             //TODO Validate User Id
 
-            //TODO Call Rating Manager to Get Ratings for User
+            //TODO add guards for null inputs
 
-            return new OkObjectResult(new List<UserRating>());
+            List<UserRating> ratings = await ratingManager.GetRatingForUser(userId);
+
+            return new OkObjectResult(ratings);
         }
     }
 }

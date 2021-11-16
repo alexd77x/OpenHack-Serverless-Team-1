@@ -8,11 +8,14 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using BFYOC.Function.Data;
+using BFYOC.Function.Managers;
 
 namespace BFYOC.Function
 {
     public static class GetRating
     {
+        private static RatingManager ratingManager = new RatingManager();
+
         [FunctionName("GetRating")]
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequest req,
@@ -22,9 +25,13 @@ namespace BFYOC.Function
 
             string ratingId = req.Query["ratingId"];
 
-            //TODO Call Ratings Manager to get the Rating
+            //TODO add guards for null inputs
+            
+            UserRating rating = await ratingManager.GetRating(ratingId);
 
-            return new OkObjectResult(new UserRating());
+            string returnvalue = $"ratingId={ratingId}\nRating Is Null? {rating==null}";
+
+            return new OkObjectResult(returnvalue);
         }
     }
 }

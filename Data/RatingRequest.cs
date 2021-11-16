@@ -5,9 +5,9 @@ namespace BFYOC.Function.Data
 {
     public sealed class RatingRequest{
         [JsonProperty(PropertyName="userId")]
-        public Guid UserId { get; set; }
+        public string UserId { get; set; }
         [JsonProperty(PropertyName="productId")]
-        public Guid ProductId { get; set; }
+        public string ProductId { get; set; }
         [JsonProperty(PropertyName="locationName")]
         public string LocationName { get; set; }
         [JsonProperty(PropertyName="rating")]

@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using BFYOC.Function.Data;
 using BFYOC.Function.Providers;
 
@@ -12,8 +14,17 @@ namespace BFYOC.Function.Managers
         {
             ratingProvider = new RatingCosmosProvider();
         }
-        public UserRating GetRating(Guid ratingId){
-            return ratingProvider.GetRatingById(ratingId);
+        public async Task<UserRating> AddRating(UserRating rating){
+            return await ratingProvider.CreateRating(rating);
+        }
+
+        public async Task<UserRating> GetRating(string ratingId){
+            return await ratingProvider.GetRatingById(ratingId);
+        }
+
+        public async Task<List<UserRating>> GetRatingForUser(string userId)
+        {
+            return await ratingProvider.GetRatingsByUser(userId);
         }
     }
 }
