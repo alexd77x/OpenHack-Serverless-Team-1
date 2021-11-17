@@ -26,14 +26,8 @@ namespace BFYOC.Function.Providers
         }
         
         public async Task<UserRating> GetRatingById(string ratingId)
-        {
-            var db = _client.GetDatabase("admin");
-            var collection = db.GetCollection<UserRating>("ratings");
-            var find = collection.Find(r => r.Id == ratingId);
-            var findall = collection.Find(_ => true);
-
-            return await db.GetCollection<UserRating>("ratings").Find(r => r.Id == ratingId).FirstOrDefaultAsync();
-            // return await db.GetCollection<UserRating>("ratings").Find(_ => true).FirstOrDefaultAsync();
+        {   
+            return await _client.GetDatabase("admin").GetCollection<UserRating>("ratings").Find(r => r.Id == ratingId).FirstOrDefaultAsync();
         }
 
         public async Task<List<UserRating>> GetRatingsByUser(string userId)
