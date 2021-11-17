@@ -29,9 +29,7 @@ namespace BFYOC.Function
             
             UserRating rating = await ratingManager.GetRating(ratingId);
 
-            string returnvalue = $"ratingId={ratingId}\nRating Is Null? {rating==null}";
-
-            return new OkObjectResult(returnvalue);
+            return new OkObjectResult(rating);
         }
     }
 }
