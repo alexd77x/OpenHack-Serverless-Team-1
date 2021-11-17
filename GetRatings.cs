@@ -16,6 +16,7 @@ namespace BFYOC.Function
     public static class GetRatings
     {
         private static RatingManager ratingManager = new RatingManager();
+        private static UserManager userManager = new UserManager();
 
         [FunctionName("GetRatings")]
         public static async Task<IActionResult> Run(
@@ -26,9 +27,15 @@ namespace BFYOC.Function
 
             string userId = req.Query["userId"];
 
-            //TODO Validate User Id
+            if(string.IsNullOrEmpty(userId))
+                return new BadRequestResult();
 
-            //TODO add guards for null inputs
+            var user = userManager.GetUser(userId);
+            if(user == null)
+            {
+                return new NotFoundObjectResult(userId);
+            }
+
 
             List<UserRating> ratings = await ratingManager.GetRatingForUser(userId);
 

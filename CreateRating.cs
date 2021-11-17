@@ -15,6 +15,8 @@ namespace BFYOC.Function
     public static class CreateRating
     {
         private static RatingManager ratingManager = new RatingManager();
+        private static UserManager userManager = new UserManager();
+        private static ProductManager productManager = new ProductManager();
         
         [FunctionName("CreateRating")]
         public static async Task<IActionResult> Run(
@@ -26,9 +28,23 @@ namespace BFYOC.Function
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             RatingRequest request = JsonConvert.DeserializeObject<RatingRequest>(requestBody);
 
-            //TODO Validate UserId Exists
+            if(string.IsNullOrEmpty(request.UserId))
+                return new BadRequestResult();
 
-            //TODO Validate ProductId Exists
+            if(string.IsNullOrEmpty(request.ProductId))
+                return new BadRequestResult();
+
+            var user = userManager.GetUser(request.UserId);
+            if(user == null)
+            {
+                return new NotFoundObjectResult(request.UserId);
+            }
+
+            var product = productManager.GetProduct(request.ProductId);
+            if(product == null)
+            {
+                return new NotFoundObjectResult(request.ProductId);
+            }
 
             UserRating newRating = new UserRating();
             newRating.Id = Guid.NewGuid().ToString();
