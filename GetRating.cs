@@ -25,9 +25,13 @@ namespace BFYOC.Function
 
             string ratingId = req.Query["ratingId"];
 
-            //TODO add guards for null inputs
+            if(string.IsNullOrEmpty(ratingId))
+                return new BadRequestResult();
             
             UserRating rating = await ratingManager.GetRating(ratingId);
+
+            if(rating == null)
+                return new NotFoundResult();
 
             return new OkObjectResult(rating);
         }

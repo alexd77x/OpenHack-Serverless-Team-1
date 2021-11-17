@@ -10,16 +10,21 @@ namespace BFYOC.Function.Providers
 
         public Product GetProduct(string productId)
         {
-            HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create($"https://serverlessohapi.azurewebsites.net/api/GetProduct?productId={productId}");
-            request.Method = "GET";
             string responseString = string.Empty;
-            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-            {
-                Stream dataStream = response.GetResponseStream();
-                StreamReader reader = new StreamReader(dataStream);
-                responseString = reader.ReadToEnd();
-                reader.Close();
-                dataStream.Close();
+            try{
+
+                HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create($"https://serverlessohapi.azurewebsites.net/api/GetProduct?productId={productId}");
+                request.Method = "GET";
+                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                {
+                    Stream dataStream = response.GetResponseStream();
+                    StreamReader reader = new StreamReader(dataStream);
+                    responseString = reader.ReadToEnd();
+                    reader.Close();
+                    dataStream.Close();
+                }
+            }catch{
+                return null;
             }
             if(string.IsNullOrEmpty(responseString))
                 return null;
@@ -34,17 +39,20 @@ namespace BFYOC.Function.Providers
 
         public List<Product> GetProducts()
         {
-
-            HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create("https://serverlessohapi.azurewebsites.net/api/GetProducts");
-            request.Method = "GET";
             string responseString = string.Empty;
-            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-            {
-                Stream dataStream = response.GetResponseStream();
-                StreamReader reader = new StreamReader(dataStream);
-                responseString = reader.ReadToEnd();
-                reader.Close();
-                dataStream.Close();
+            try{
+                HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create("https://serverlessohapi.azurewebsites.net/api/GetProducts");
+                request.Method = "GET";
+                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                {
+                    Stream dataStream = response.GetResponseStream();
+                    StreamReader reader = new StreamReader(dataStream);
+                    responseString = reader.ReadToEnd();
+                    reader.Close();
+                    dataStream.Close();
+                }
+            }catch{
+                return null;
             }
 
             if(string.IsNullOrEmpty(responseString))

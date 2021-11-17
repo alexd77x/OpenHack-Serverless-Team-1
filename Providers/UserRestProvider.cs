@@ -10,16 +10,21 @@ namespace BFYOC.Function.Providers
         
         public User GetUser(string userId)
         {
-            HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create($"https://serverlessohapi.azurewebsites.net/api/GetUser?userId={userId}");
-            request.Method = "GET";
             string responseString = string.Empty;
-            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+            try
             {
-                Stream dataStream = response.GetResponseStream();
-                StreamReader reader = new StreamReader(dataStream);
-                responseString = reader.ReadToEnd();
-                reader.Close();
-                dataStream.Close();
+                HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create($"https://serverlessohapi.azurewebsites.net/api/GetUser?userId={userId}");
+                request.Method = "GET";
+                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                {
+                    Stream dataStream = response.GetResponseStream();
+                    StreamReader reader = new StreamReader(dataStream);
+                    responseString = reader.ReadToEnd();
+                    reader.Close();
+                    dataStream.Close();
+                }
+            }catch{
+                return null;
             }
             
             if(string.IsNullOrEmpty(responseString))
@@ -35,17 +40,21 @@ namespace BFYOC.Function.Providers
 
         public List<User> GetUsers()
         {
-
-            HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create("https://serverlessohapi.azurewebsites.net/api/GetUsers");
-            request.Method = "GET";
             string responseString = string.Empty;
-            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-            {
-                Stream dataStream = response.GetResponseStream();
-                StreamReader reader = new StreamReader(dataStream);
-                responseString = reader.ReadToEnd();
-                reader.Close();
-                dataStream.Close();
+            try{
+
+                HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create("https://serverlessohapi.azurewebsites.net/api/GetUsers");
+                request.Method = "GET";
+                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                {
+                    Stream dataStream = response.GetResponseStream();
+                    StreamReader reader = new StreamReader(dataStream);
+                    responseString = reader.ReadToEnd();
+                    reader.Close();
+                    dataStream.Close();
+                }
+            }catch{
+                return null;
             }
             
             if(string.IsNullOrEmpty(responseString))
