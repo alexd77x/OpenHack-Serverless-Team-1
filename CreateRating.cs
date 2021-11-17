@@ -37,8 +37,8 @@ namespace BFYOC.Function
             newRating.UserId = request.UserId;
             newRating.Rating = request.Rating;
             newRating.UserNotes = request.UserNotes;
+            newRating.LocationName = request.LocationName;
 
-            //TODO Create Rating element in Database   
             var createdRating = await ratingManager.AddRating(newRating);
 
             return new OkObjectResult(createdRating);
